@@ -1,3 +1,40 @@
-p{
-    color:black;
+body {
+    display: flex;
+    flex-wrap: wrap;
+    background: burlywood;
+    align-items: flex-end;
+}
+
+.topBar{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+p {
+    color: black;
+    padding: 20px;
+    font-size: 30px;
+    margin: 0px;
+}
+
+#resetBtn{
+    background-color: brown;
+    border: solid 5px;
+}
+
+.content{
+    width: 100%;
+    padding: 20px;
+    margin: 30px;
+}
+
+#quizBox{
+    display: flex;
+    flex-direction: column;
+}
+
+#quizBox>h1{
+
 }

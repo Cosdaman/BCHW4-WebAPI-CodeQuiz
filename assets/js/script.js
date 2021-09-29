@@ -1,11 +1,13 @@
 var timerEl = document.getElementById('timer');
 
+
+//timer codeblock
 function countdown() {
     var timeLeft = 120;
     var timer = setInterval(function () {
-        timerEl.textContent = timeLeft + " seconds remaining";
+        timerEl.textContent = "Time: " + timeLeft;
         if (timeLeft === 0) {
-            clearInterval(timeInterval);
+            clearInterval(timer);
         }
         timeLeft--;
     }, 1000);
