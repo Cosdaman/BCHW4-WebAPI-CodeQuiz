@@ -12,15 +12,15 @@ body {
     align-items: center;
 }
 
-#timer, #resetBtn {
+#timer, #startResetBtn {
     color: black;
     padding: 20px;
     font-size: 30px;
     margin: 0px;
 }
 
-#resetBtn{
-    background-color: brown;
+#startResetBtn{
+    background-color: rgb(194, 129, 55);
     border: solid 5px;
 }
 
