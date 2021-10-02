@@ -1,11 +1,21 @@
-var timerEl = document.getElementById('timer');
+//element selectors
+var timerEl = document.getElementById("timer");
+var contentDiv = document.getElementById("content");
 var startResetBtn = document.getElementById('startResetBtn');
+
+//variable creation
+var divEl = document.createElement("div");
+var h1El = document.createElement("h1");
 var timeLeft;
 
 //fresh state of page
 function freshState() {
     startResetBtn.textContent = "Start";
     startResetBtn.setAttribute("data-function", "start");
+    contentDiv.appendChild(divEl);
+    divEl.appendChild(h1El);
+    h1El.textContent = "Welcome to my code quiz, press the start button to start."
+    console.log("fresh state");
 }
 
 //start button is clicked, turn into reset button
@@ -18,7 +28,8 @@ function startResetBtnPress(event) {
             startResetBtn.textContent = "Reset";
             startResetBtn.setAttribute("data-function", "reset");
             countdown();
-
+            clearContent();
+            
         } else {
             freshState();
             resetTimer();
@@ -33,7 +44,6 @@ function countdown() {
         timerEl.textContent = "Time: " + timeLeft;
         if (timeLeft <= 0) {
             clearInterval(timer);
-            resetTimer();
             //to do: end game function
         }
         timeLeft--;
@@ -43,7 +53,20 @@ function countdown() {
 function resetTimer() {
     timerEl.textContent = "";
     timeLeft = 0;
+    console.log("reset timer")
 }
+
+function clearContent(){
+    while (contentDiv.firstChild) {
+        contentDiv.removeChild(contentDiv.firstChild)
+    }
+    console.log("cleared content")
+}
+
+function quizActual(){
+
+}
+
 
 freshState();
 
@@ -53,7 +76,12 @@ startResetBtn.addEventListener("click", startResetBtnPress);
 
 //game start and question with answers appear
 
-//todo: make question bank and question box module
+//question box module will be made with dom creation tools
+//todo: make question box module
+//todo: make question bank
+// make on click listeners to answers
+//give answers data answer attribute
+//can also give answers data attribute to say if answer is correct
+
 //question box module will be using array modularity
 //2d array
-//question box module will be made with dom creation tools

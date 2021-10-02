@@ -1,8 +1,18 @@
+*{
+    box-sizing: border-box;
+}
+
 body {
     display: flex;
     flex-wrap: wrap;
     background: burlywood;
     align-items: flex-end;
+    margin: 0px;
+}
+
+h1{
+    margin:auto; 
+    text-align:center;
 }
 
 .topBar{
@@ -24,13 +34,10 @@ body {
     border: solid 5px;
 }
 
-.content{
+#content{
+    display: flex;
     width: 100%;
     padding: 20px;
     margin: 30px;
-}
-
-#quizBox{
-    display: flex;
-    flex-direction: column;
+    justify-content: center;
 }
