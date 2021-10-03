@@ -5,6 +5,7 @@ var startResetBtn = document.getElementById('startResetBtn');
 
 //dom var creation
 var h1El = document.createElement("h1");
+var ulEl = document.createElement("ul");
 
 //var creations
 var timeLeft = 0;
@@ -18,9 +19,9 @@ var index = 0;
 
 var questionsArr = ["q1", "q2", "q3"]
 var answersArr = [
-    ["answer1", "answer2", "answer3"],
-    ["answer1", "answer2"],
-    ["answer1", "answer2", "answer3", "answer4"]
+    ["q1a1", "q1a2", "q1a3"],
+    ["q2a1", "q2a2"],
+    ["q3a1", "q3a2", "q3a3", "q3a4"]
 ];
 var correctAnsArr = ["1", "2", "3"];
 
@@ -43,8 +44,8 @@ function startResetBtnPress(event) {
         if (startResetBtn.textContent == "Start") {
             startResetBtn.textContent = "Reset";
             startResetBtn.setAttribute("data-function", "reset");
+            countdown();
             quizActual();
-
         } else {
             clearContent();
             freshState();
@@ -55,6 +56,7 @@ function startResetBtnPress(event) {
 
 //timer codeblock
 function countdown() {
+    console.log("countdown");
     timeLeft = 120;
     var timer = setInterval(function () {
         timerEl.textContent = "Time: " + timeLeft;
@@ -67,54 +69,70 @@ function countdown() {
     }, 1000);
 }
 
+//resets the timer
 function resetTimer() {
-    timeLeft = 0;
     console.log("reset timer")
+    timeLeft = 0;
 }
 
+//clears content div of page
 function clearContent() {
+    console.log("cleared content")
     while (contentDiv.firstChild) {
         contentDiv.removeChild(contentDiv.firstChild)
-        h1El.textContent = "";
     }
-    console.log("cleared content")
 }
 
+//quiz function to scroll through the questions 
 function quizActual() {
-
-    //index value everytime it is called
-    //refer to gallery in previous exercise
     clearContent();
-    countdown();
     console.log("quiz actual")
-    if (index !== null) {
+    if (index < questionsArr.length) {
         contentDiv.appendChild(h1El);
         h1El.textContent = questionsArr[index];
 
+        //create buttons with all possible answers in the answer array for the specific question
         for (let i = 0; i < answersArr[index].length; i++) {
             var btnEl = document.createElement("button");
             contentDiv.appendChild(btnEl);
             btnEl.textContent = answersArr[index][i];
+            btnEl.setAttribute("data-answer-index", i);
+            btnEl.setAttribute("data-function", "answer");
         }
+    } else {
+        endGame();
     }
 
-
-    //create button and populate with answers 1 by 1
-    //after buttons are created add on click listener on the div and if target is button, choose answer function with 1 input
+    //give all buttons click event listeners
+    var buttonAnswers = document.querySelectorAll("button");
+    for (let i = 0; i < buttonAnswers.length; i++) {
+        buttonAnswers[i].addEventListener("click", chooseAnswer)
+    }
 
 }
 
-
-
-function chooseAnswer(chosenAnswer) {
+function chooseAnswer(event) {
+    console.log("choose answer");
+    var element = event.target;
+    var answerID = element.getAttribute("data-answer-index");
+    var buttonType = element.getAttribute("data-function");
+    if (buttonType ==="answer" ) {
+        index++;
+        quizActual();
+    }
+    //after buttons are created add on click listener on the div and if target is button, choose answer function with 1 input
     //compares button click with correct answer array, 
     //button click grab value, compare with correct answer
     //if correct, do nothing to timer
     //if wrong subtract time from timer
 
     //if not possible to pass answer through function, intergrate into onclick listener
-    index++;
-    quizActual();
+
+}
+
+function endGame() {
+    console.log("end game")
+    resetTimer();
 }
 
 
@@ -127,12 +145,7 @@ startResetBtn.addEventListener("click", startResetBtnPress);
 //question box module will be made with dom creation tools
 //todo: make question box module
 //add actual questions to question bank
-// make on click listeners to answers
-//give answers data answer attribute
 //can also give answers data attribute to say if answer is correct
-
-//question box module will be using array modularity
-//2d array
 
 //optional:
 //add countdown before game starts

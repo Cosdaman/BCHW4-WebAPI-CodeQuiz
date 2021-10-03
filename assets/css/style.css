@@ -11,8 +11,9 @@ body {
 }
 
 h1 {
-    margin: auto;
+    margin: 20px;
     text-align: center;
+    min-height: 300px;
 }
 
 .topBar {
@@ -43,4 +44,9 @@ h1 {
     width: 100%;
     padding: 20px;
     margin: 30px;
+}
+
+#content button{
+    border: 5px solid black;
+    border-radius: 10px;
 }
