@@ -5,7 +5,6 @@ var startResetBtn = document.getElementById('startResetBtn');
 
 //dom var creation
 var h1El = document.createElement("h1");
-var ulEl = document.createElement("ul");
 
 //var creations
 var timeLeft = 0;
@@ -17,13 +16,15 @@ var index = 0;
 //answers array are the answers for the questions with the same index 
 //correctans array are the correct answers for each question with the same index
 
-var questionsArr = ["q1", "q2", "q3"]
+var questionsArr = ["Which of the following is an advantage of using JavaScript?",
+    "Which built-in method calls a function for each element in the array?",
+    "q3"]
 var answersArr = [
-    ["q1a1", "q1a2", "q1a3"],
-    ["q2a1", "q2a2"],
+    ["Less server interaction", " Immediate feedback to the visitors", "Increased interactivity", "All of the above"],
+    ["while()", "loop()", "forEach()"],
     ["q3a1", "q3a2", "q3a3", "q3a4"]
 ];
-var correctAnsArr = ["1", "2", "3"];
+var correctAnsArr = ["4", "3", "3"];
 
 //fresh state of page
 function freshState() {
@@ -32,7 +33,7 @@ function freshState() {
     startResetBtn.textContent = "Start";
     startResetBtn.setAttribute("data-function", "start");
     contentDiv.appendChild(h1El);
-    h1El.textContent = "Welcome to my code quiz, press the start button to start."
+    h1El.textContent = "Welcome to my code quiz. The questions presented here have been taken from a variety of sources. When you are ready to begin, press the start button."
     console.log("fresh state");
 }
 
@@ -117,6 +118,7 @@ function chooseAnswer(event) {
     var answerID = element.getAttribute("data-answer-index");
     var buttonType = element.getAttribute("data-function");
     if (buttonType === "answer") {
+        //-1 because of developer choice with how the questions are set up.
         if (answerID == correctAnsArr[index] - 1) {
             console.log("correct answer");
             element.style.backgroundColor = "#8FBC8F";
@@ -151,6 +153,11 @@ function waitTime(x) {
 
 function endGame() {
     console.log("end game")
+    contentDiv.appendChild(h1El);
+    h1El.textContent = "Game has ended. Please enter your initials below."
+    //append input element for initials
+    //save as local file array high score
+    //save score and initials
     resetTimer();
 }
 
