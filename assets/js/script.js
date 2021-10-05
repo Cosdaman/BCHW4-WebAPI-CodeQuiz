@@ -28,6 +28,7 @@ var correctAnsArr = ["1", "2", "3"];
 //fresh state of page
 function freshState() {
     index = 0;
+    resetTimer();
     startResetBtn.textContent = "Start";
     startResetBtn.setAttribute("data-function", "start");
     contentDiv.appendChild(h1El);
@@ -49,7 +50,6 @@ function startResetBtnPress(event) {
         } else {
             clearContent();
             freshState();
-            resetTimer();
         }
     }
 }
@@ -108,25 +108,44 @@ function quizActual() {
     for (let i = 0; i < buttonAnswers.length; i++) {
         buttonAnswers[i].addEventListener("click", chooseAnswer)
     }
-
 }
 
+//chooseanswer function to compare user choice with actual answer
 function chooseAnswer(event) {
     console.log("choose answer");
     var element = event.target;
     var answerID = element.getAttribute("data-answer-index");
     var buttonType = element.getAttribute("data-function");
-    if (buttonType ==="answer" ) {
-        index++;
-        quizActual();
+    if (buttonType === "answer") {
+        if (answerID == correctAnsArr[index] - 1) {
+            console.log("correct answer");
+            element.style.backgroundColor = "#8FBC8F";
+            waitTime(1);
+        }
+        else {
+            console.log("wrong answer");
+            timeLeft -= 10;
+            element.style.backgroundColor = "#8B0000";
+            waitTime(1);
+        }
     }
-    //after buttons are created add on click listener on the div and if target is button, choose answer function with 1 input
-    //compares button click with correct answer array, 
-    //button click grab value, compare with correct answer
-    //if correct, do nothing to timer
-    //if wrong subtract time from timer
+}
 
-    //if not possible to pass answer through function, intergrate into onclick listener
+//wait timer 
+//waits a second after answering to show result of answer
+function waitTime(x) {
+    console.log("wait time");
+    var waitTime = x;
+    var waitTimer = setInterval(function () {
+
+        if (waitTime <= 0) {
+            clearInterval(waitTimer);
+            console.log("wait time done")
+            index++;
+            quizActual();
+        }
+        waitTime--;
+    }, 1000);
 
 }
 
@@ -134,7 +153,6 @@ function endGame() {
     console.log("end game")
     resetTimer();
 }
-
 
 freshState();
 
@@ -145,7 +163,6 @@ startResetBtn.addEventListener("click", startResetBtnPress);
 //question box module will be made with dom creation tools
 //todo: make question box module
 //add actual questions to question bank
-//can also give answers data attribute to say if answer is correct
 
 //optional:
 //add countdown before game starts
