@@ -5,12 +5,14 @@ var startResetBtn = document.getElementById('startResetBtn');
 
 //dom var creation
 var h1El = document.createElement("h1");
+var h2El = document.createElement("h2");
 var input = document.createElement("input");
 
 //var creations
 var timeLeft = 0;
 var index = 0;
-var score = 0;
+var gameScore = 0;
+var highScores = [];
 
 //questions and answers
 //multiple arrays
@@ -109,7 +111,7 @@ function quizActual() {
             }
         }
     } else {
-        score = timeLeft;
+        gameScore = timeLeft;
         endGame();
     }
 }
@@ -156,9 +158,23 @@ function waitTime(x) {
 function saveScore() {
     console.log("save score")
 
-    //save as local file array high score
-    //save score and initials
+//add checker for only top 10
+//if more than 10, pop then push
 
+    var scoreInfo = {
+        initials: input.value,
+        score: gameScore
+    };
+    highScores.push(scoreInfo)
+
+    //ascending sort function 
+    highScores.sort(
+        function (a, b) {
+            return b.score - a.score
+        });
+
+    localStorage.setItem("scoreInfo", JSON.stringify(highScores));
+    showHighScore();
 }
 
 function endGame() {
@@ -175,6 +191,13 @@ function endGame() {
     contentDiv.appendChild(btnEl);
 
     btnEl.addEventListener("click", saveScore)
+}
+
+function showHighScore(){
+    console.log("show highscore")
+    clearContent();
+//add h2 for high score title
+//add ul li remove li markers
 }
 
 freshState();
