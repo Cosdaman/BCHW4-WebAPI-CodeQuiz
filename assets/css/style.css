@@ -47,6 +47,7 @@ h1 {
 }
 
 #content button{
-    border: 5px solid black;
+    border: 2px solid black;
     border-radius: 10px;
+    margin-top: 5px;
 }

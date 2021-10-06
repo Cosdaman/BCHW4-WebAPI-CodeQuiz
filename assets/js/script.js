@@ -5,10 +5,12 @@ var startResetBtn = document.getElementById('startResetBtn');
 
 //dom var creation
 var h1El = document.createElement("h1");
+var input = document.createElement("input");
 
 //var creations
 var timeLeft = 0;
 var index = 0;
+var score = 0;
 
 //questions and answers
 //multiple arrays
@@ -99,15 +101,16 @@ function quizActual() {
             btnEl.textContent = answersArr[index][i];
             btnEl.setAttribute("data-answer-index", i);
             btnEl.setAttribute("data-function", "answer");
+
+            //give all buttons click event listeners
+            var buttonAnswers = document.querySelectorAll("button");
+            for (let i = 0; i < buttonAnswers.length; i++) {
+                buttonAnswers[i].addEventListener("click", chooseAnswer);
+            }
         }
     } else {
+        score = timeLeft;
         endGame();
-    }
-
-    //give all buttons click event listeners
-    var buttonAnswers = document.querySelectorAll("button");
-    for (let i = 0; i < buttonAnswers.length; i++) {
-        buttonAnswers[i].addEventListener("click", chooseAnswer)
     }
 }
 
@@ -122,19 +125,18 @@ function chooseAnswer(event) {
         if (answerID == correctAnsArr[index] - 1) {
             console.log("correct answer");
             element.style.backgroundColor = "#8FBC8F";
-            waitTime(1);
         }
         else {
             console.log("wrong answer");
             timeLeft -= 10;
             element.style.backgroundColor = "#8B0000";
-            waitTime(1);
         }
+        waitTime(1);
     }
 }
 
 //wait timer 
-//waits a second after answering to show result of answer
+//waits x * 500ms after answering to show result of answer
 function waitTime(x) {
     console.log("wait time");
     var waitTime = x;
@@ -147,29 +149,41 @@ function waitTime(x) {
             quizActual();
         }
         waitTime--;
-    }, 1000);
+    }, 500);
+
+}
+
+function saveScore() {
+    console.log("save score")
+
+    //save as local file array high score
+    //save score and initials
 
 }
 
 function endGame() {
     console.log("end game")
-    contentDiv.appendChild(h1El);
-    h1El.textContent = "Game has ended. Please enter your initials below."
-    //append input element for initials
-    //save as local file array high score
-    //save score and initials
     resetTimer();
+    var btnEl = document.createElement("button");
+
+    btnEl.textContent = "Save"
+    h1El.textContent = "Game has ended. Please enter your initials below."
+    input.type = "text";
+
+    contentDiv.appendChild(h1El);
+    contentDiv.appendChild(input);
+    contentDiv.appendChild(btnEl);
+
+    btnEl.addEventListener("click", saveScore)
 }
 
 freshState();
-
 startResetBtn.addEventListener("click", startResetBtnPress);
 
-//game start and question with answers appear
 
-//question box module will be made with dom creation tools
-//todo: make question box module
 //add actual questions to question bank
+//finish save score
 
 //optional:
 //add countdown before game starts
+//disable all buttons affter answer chosen
