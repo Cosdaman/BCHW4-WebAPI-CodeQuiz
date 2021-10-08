@@ -24,13 +24,13 @@ var storedHighScores;
 
 var questionsArr = ["Which of the following is an advantage of using JavaScript?",
     "Which built-in method calls a function for each element in the array?",
-    "q3"]
+    "Is 'Boolean' a javascript primitive data type?"]
 var answersArr = [
     ["Less server interaction", " Immediate feedback to the visitors", "Increased interactivity", "All of the above"],
     ["while()", "loop()", "forEach()"],
-    ["q3a1", "q3a2", "q3a3", "q3a4"]
+    ["Yes", "No"]
 ];
-var correctAnsArr = ["4", "3", "3"];
+var correctAnsArr = ["4", "3", "1"];
 
 //fresh state of page
 function freshState() {
@@ -49,7 +49,7 @@ function freshState() {
     startResetBtn.setAttribute("data-function", "start");
     contentDiv.appendChild(h1El);
     h1El.textContent = "Welcome to my code quiz. The questions presented here have been taken from a variety of sources. When you are ready to begin, press the start button."
-    console.log("fresh state");
+    //console.log("fresh state");
 }
 
 //start button is clicked, start timer and game, and turn start button into reset button
@@ -61,7 +61,6 @@ function startResetBtnPress(event) {
         if (startResetBtn.textContent == "Start") {
             startResetBtn.textContent = "Reset";
             startResetBtn.setAttribute("data-function", "reset");
-
             countdown();
             quizActual();
         } else {
@@ -73,14 +72,13 @@ function startResetBtnPress(event) {
 
 //timer codeblock
 function countdown() {
-    console.log("countdown");
+    //console.log("countdown");
     timeLeft = 120;
     var timer = setInterval(function () {
         timerEl.textContent = "Time: " + timeLeft;
         if (timeLeft <= 0) {
             clearInterval(timer);
             timerEl.textContent = "Time: N/A";
-            //to do: end game function
         }
         timeLeft--;
     }, 1000);
@@ -88,13 +86,14 @@ function countdown() {
 
 //resets the timer
 function resetTimer() {
-    console.log("reset timer")
+    //console.log("reset timer")
+    gameScore = timeLeft;
     timeLeft = 0;
 }
 
 //clears content div of page
 function clearContent() {
-    console.log("cleared content")
+    //console.log("cleared content")
     while (contentDiv.firstChild) {
         contentDiv.removeChild(contentDiv.firstChild)
     }
@@ -103,7 +102,7 @@ function clearContent() {
 //quiz function to scroll through the questions 
 function quizActual() {
     clearContent();
-    console.log("quiz actual")
+    //console.log("quiz actual")
     if (index < questionsArr.length) {
         contentDiv.appendChild(h1El);
         h1El.textContent = questionsArr[index];
@@ -123,25 +122,24 @@ function quizActual() {
             }
         }
     } else {
-        gameScore = timeLeft;
         endGame();
     }
 }
 
 //chooseanswer function to compare user choice with actual answer
 function chooseAnswer(event) {
-    console.log("choose answer");
+    //console.log("choose answer");
     var element = event.target;
     var answerID = element.getAttribute("data-answer-index");
     var buttonType = element.getAttribute("data-function");
     if (buttonType === "answer") {
         //-1 because of developer choice with how the questions are set up.
         if (answerID == correctAnsArr[index] - 1) {
-            console.log("correct answer");
+            //console.log("correct answer");
             element.style.backgroundColor = "#8FBC8F";
         }
         else {
-            console.log("wrong answer");
+            //console.log("wrong answer");
             timeLeft -= 10;
             element.style.backgroundColor = "#8B0000";
         }
@@ -152,13 +150,13 @@ function chooseAnswer(event) {
 //wait timer 
 //waits x * 500ms after answering to show result of answer
 function waitTime(x) {
-    console.log("wait time");
+    //console.log("wait time");
     var waitTime = x;
     var waitTimer = setInterval(function () {
 
         if (waitTime <= 0) {
             clearInterval(waitTimer);
-            console.log("wait time done")
+            //console.log("wait time done")
             index++;
             quizActual();
         }
@@ -168,7 +166,7 @@ function waitTime(x) {
 }
 
 function saveScore() {
-    console.log("save score")
+    //console.log("save score")
     var scoreInfo = {
         initials: input.value,
         score: gameScore
@@ -191,7 +189,8 @@ function saveScore() {
 }
 
 function endGame() {
-    console.log("end game")
+    //console.log("end game")
+    gameScore = timeLeft;
     resetTimer();
     var btnEl = document.createElement("button");
 
@@ -208,9 +207,9 @@ function endGame() {
 }
 
 function showHighScore() {
-    console.log("show highscore")
+    //console.log("show highscore")
     clearContent();
-    h2El.textContent = "High Scores";
+    h2El.textContent = "Top 8 High Scores";
     contentDiv.appendChild(h2El);
     contentDiv.appendChild(ulEl);
     for (let i = 0; i < highScores.length; i++) {
@@ -222,8 +221,6 @@ function showHighScore() {
 freshState();
 startResetBtn.addEventListener("click", startResetBtnPress);
 
-
-//add actual questions to question bank
 
 //optional:
 //add countdown before game starts
