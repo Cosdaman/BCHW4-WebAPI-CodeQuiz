@@ -1,6 +1,6 @@
 # BCHW4-WebAPI-CodeQuiz
 
-Description:
+Description:  
 This project is meant to show the student developer's understanding of new skills regarding javascript. Examples of new skills are, but not limited to, the following:  
 - DOM Traversal
 - Timers
