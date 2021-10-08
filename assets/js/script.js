@@ -7,7 +7,6 @@ var startResetBtn = document.getElementById('startResetBtn');
 var h1El = document.createElement("h1");
 var h2El = document.createElement("h2");
 var input = document.createElement("input");
-var ulEl = document.createElement("ul");
 
 //var creations
 var timeLeft = 0;
@@ -38,8 +37,10 @@ function freshState() {
     index = 0;
     //ensure timer is reset
     resetTimer();
-
+    clearContent();
     //load local highscores into data
+    highScores = [];
+    console.log(highScores);
     storedHighScores = JSON.parse(localStorage.getItem("scoreInfo"));
     if (storedHighScores !== null) {
         highScores = storedHighScores;
@@ -49,7 +50,7 @@ function freshState() {
     startResetBtn.setAttribute("data-function", "start");
     contentDiv.appendChild(h1El);
     h1El.textContent = "Welcome to my code quiz. The questions presented here have been taken from a variety of sources. When you are ready to begin, press the start button."
-    //console.log("fresh state");
+    console.log("fresh state");
 }
 
 //start button is clicked, start timer and game, and turn start button into reset button
@@ -72,7 +73,7 @@ function startResetBtnPress(event) {
 
 //timer codeblock
 function countdown() {
-    //console.log("countdown");
+    console.log("countdown");
     timeLeft = 120;
     var timer = setInterval(function () {
         timerEl.textContent = "Time: " + timeLeft;
@@ -86,14 +87,14 @@ function countdown() {
 
 //resets the timer
 function resetTimer() {
-    //console.log("reset timer")
+    console.log("reset timer")
     gameScore = timeLeft;
     timeLeft = 0;
 }
 
 //clears content div of page
 function clearContent() {
-    //console.log("cleared content")
+    console.log("cleared content")
     while (contentDiv.firstChild) {
         contentDiv.removeChild(contentDiv.firstChild)
     }
@@ -102,7 +103,7 @@ function clearContent() {
 //quiz function to scroll through the questions 
 function quizActual() {
     clearContent();
-    //console.log("quiz actual")
+    console.log("quiz actual")
     if (index < questionsArr.length) {
         contentDiv.appendChild(h1El);
         h1El.textContent = questionsArr[index];
@@ -116,7 +117,7 @@ function quizActual() {
             btnEl.setAttribute("data-function", "answer");
 
             //give all buttons click event listeners
-            var buttonAnswers = document.querySelectorAll("button");
+            var buttonAnswers = document.querySelectorAll("[data-function='answer']");
             for (let i = 0; i < buttonAnswers.length; i++) {
                 buttonAnswers[i].addEventListener("click", chooseAnswer);
             }
@@ -128,35 +129,45 @@ function quizActual() {
 
 //chooseanswer function to compare user choice with actual answer
 function chooseAnswer(event) {
-    //console.log("choose answer");
+    console.log("choose answer");
     var element = event.target;
     var answerID = element.getAttribute("data-answer-index");
     var buttonType = element.getAttribute("data-function");
+    var answerButtons = document.querySelectorAll("[data-function='answer']");
     if (buttonType === "answer") {
         //-1 because of developer choice with how the questions are set up.
         if (answerID == correctAnsArr[index] - 1) {
-            //console.log("correct answer");
+            console.log("correct answer");
             element.style.backgroundColor = "#8FBC8F";
+            disableButtons(answerButtons);
+
         }
         else {
-            //console.log("wrong answer");
+            console.log("wrong answer");
             timeLeft -= 10;
             element.style.backgroundColor = "#8B0000";
+            disableButtons(answerButtons);
         }
         waitTime(1);
+    }
+}
+
+function disableButtons(arr) {
+    for (let i = 0; i < arr.length; i++) {
+        arr[i].setAttribute("disabled", true);
     }
 }
 
 //wait timer 
 //waits x * 500ms after answering to show result of answer
 function waitTime(x) {
-    //console.log("wait time");
+    console.log("wait time");
     var waitTime = x;
     var waitTimer = setInterval(function () {
 
         if (waitTime <= 0) {
             clearInterval(waitTimer);
-            //console.log("wait time done")
+            console.log("wait time done")
             index++;
             quizActual();
         }
@@ -166,7 +177,7 @@ function waitTime(x) {
 }
 
 function saveScore() {
-    //console.log("save score")
+    console.log("save score")
     var scoreInfo = {
         initials: input.value,
         score: gameScore
@@ -179,7 +190,7 @@ function saveScore() {
             return b.score - a.score
         });
 
-    if (highScores.length > 8) {
+    while (highScores.length > 8) {
         highScores.pop();
     }
 
@@ -189,7 +200,7 @@ function saveScore() {
 }
 
 function endGame() {
-    //console.log("end game")
+    console.log("end game")
     gameScore = timeLeft;
     resetTimer();
     var btnEl = document.createElement("button");
@@ -207,9 +218,10 @@ function endGame() {
 }
 
 function showHighScore() {
-    //console.log("show highscore")
+    console.log("show highscore")
     clearContent();
     h2El.textContent = "Top 8 High Scores";
+    var ulEl = document.createElement("ul");
     contentDiv.appendChild(h2El);
     contentDiv.appendChild(ulEl);
     for (let i = 0; i < highScores.length; i++) {
@@ -218,10 +230,11 @@ function showHighScore() {
         ulEl.appendChild(liEl);
     }
 }
+
+//initialize
 freshState();
 startResetBtn.addEventListener("click", startResetBtnPress);
 
 
 //optional:
-//add countdown before game starts
 //disable all buttons affter answer chosen
