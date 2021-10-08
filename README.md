@@ -8,14 +8,13 @@ This project is meant to show the student developer's understanding of new skill
 - Data Attributes
 - Local Storage
 
-Screenshots:
+Screenshots:  
 
-![image](https://user-images.githubusercontent.com/3162991/136617428-e37007ae-7dd0-47e3-be1f-e991d4fb35c6.png)
+![image](https://user-images.githubusercontent.com/3162991/136621768-f17ce87f-166c-421b-bb3e-15c24226809c.png)
 
-![image](https://user-images.githubusercontent.com/3162991/136617514-0fcae17c-b2b8-473a-a8bd-5cb55d4ffd8e.png)
+![image](https://user-images.githubusercontent.com/3162991/136621790-acc8f6ee-5b8a-4582-a64a-5ec51d7bc046.png)
 
-![image](https://user-images.githubusercontent.com/3162991/136617576-f747dc32-2fa7-4bf3-8ed7-c525e9e14a6c.png)
-
+![image](https://user-images.githubusercontent.com/3162991/136621815-9cbe3a6e-bf76-460f-8083-ba56c787d1d3.png)
 
 Link to webpage:  
 https://cosdaman.github.io/BCHW4-WebAPI-CodeQuiz/
