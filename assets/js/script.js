@@ -2,6 +2,7 @@
 var timerEl = document.getElementById("timer");
 var contentDiv = document.getElementById("content");
 var startResetBtn = document.getElementById('startResetBtn');
+var highScoreBtn = document.getElementById('highScoreBtn');
 
 //dom var creation
 var h1El = document.createElement("h1");
@@ -38,9 +39,9 @@ function freshState() {
     //ensure timer is reset
     resetTimer();
     clearContent();
-    //load local highscores into data
+
+    //load local highscores into data    
     highScores = [];
-    console.log(highScores);
     storedHighScores = JSON.parse(localStorage.getItem("scoreInfo"));
     if (storedHighScores !== null) {
         highScores = storedHighScores;
@@ -217,9 +218,12 @@ function endGame() {
     btnEl.addEventListener("click", saveScore)
 }
 
+
+//shows highscores on screen
 function showHighScore() {
     console.log("show highscore")
     clearContent();
+    resetTimer();
     h2El.textContent = "Top 8 High Scores";
     var ulEl = document.createElement("ul");
     contentDiv.appendChild(h2El);
@@ -231,10 +235,8 @@ function showHighScore() {
     }
 }
 
+
 //initialize
 freshState();
 startResetBtn.addEventListener("click", startResetBtnPress);
-
-
-//optional:
-//disable all buttons affter answer chosen
+highScoreBtn.addEventListener("click", showHighScore);
