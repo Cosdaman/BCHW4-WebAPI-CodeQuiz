@@ -7,12 +7,14 @@ var startResetBtn = document.getElementById('startResetBtn');
 var h1El = document.createElement("h1");
 var h2El = document.createElement("h2");
 var input = document.createElement("input");
+var ulEl = document.createElement("ul");
 
 //var creations
 var timeLeft = 0;
 var index = 0;
 var gameScore = 0;
 var highScores = [];
+var storedHighScores;
 
 //questions and answers
 //multiple arrays
@@ -32,8 +34,17 @@ var correctAnsArr = ["4", "3", "3"];
 
 //fresh state of page
 function freshState() {
+    //questionnaire index
     index = 0;
+    //ensure timer is reset
     resetTimer();
+
+    //load local highscores into data
+    storedHighScores = JSON.parse(localStorage.getItem("scoreInfo"));
+    if (storedHighScores !== null) {
+        highScores = storedHighScores;
+    }
+
     startResetBtn.textContent = "Start";
     startResetBtn.setAttribute("data-function", "start");
     contentDiv.appendChild(h1El);
@@ -50,6 +61,7 @@ function startResetBtnPress(event) {
         if (startResetBtn.textContent == "Start") {
             startResetBtn.textContent = "Reset";
             startResetBtn.setAttribute("data-function", "reset");
+
             countdown();
             quizActual();
         } else {
@@ -157,10 +169,6 @@ function waitTime(x) {
 
 function saveScore() {
     console.log("save score")
-
-//add checker for only top 10
-//if more than 10, pop then push
-
     var scoreInfo = {
         initials: input.value,
         score: gameScore
@@ -173,7 +181,12 @@ function saveScore() {
             return b.score - a.score
         });
 
+    if (highScores.length > 8) {
+        highScores.pop();
+    }
+
     localStorage.setItem("scoreInfo", JSON.stringify(highScores));
+    input.value = "";
     showHighScore();
 }
 
@@ -185,6 +198,7 @@ function endGame() {
     btnEl.textContent = "Save"
     h1El.textContent = "Game has ended. Please enter your initials below."
     input.type = "text";
+    input.maxLength = "4";
 
     contentDiv.appendChild(h1El);
     contentDiv.appendChild(input);
@@ -193,19 +207,23 @@ function endGame() {
     btnEl.addEventListener("click", saveScore)
 }
 
-function showHighScore(){
+function showHighScore() {
     console.log("show highscore")
     clearContent();
-//add h2 for high score title
-//add ul li remove li markers
+    h2El.textContent = "High Scores";
+    contentDiv.appendChild(h2El);
+    contentDiv.appendChild(ulEl);
+    for (let i = 0; i < highScores.length; i++) {
+        var liEl = document.createElement("li");
+        liEl.innerHTML = "<p>" + highScores[i].initials + "</p>" + "<p>" + highScores[i].score + "</p>"
+        ulEl.appendChild(liEl);
+    }
 }
-
 freshState();
 startResetBtn.addEventListener("click", startResetBtnPress);
 
 
 //add actual questions to question bank
-//finish save score
 
 //optional:
 //add countdown before game starts
