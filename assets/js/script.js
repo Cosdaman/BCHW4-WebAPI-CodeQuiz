@@ -235,7 +235,6 @@ function showHighScore() {
     }
 }
 
-
 //initialize
 freshState();
 startResetBtn.addEventListener("click", startResetBtnPress);
