@@ -1,6 +1,6 @@
 # BCHW4-WebAPI-CodeQuiz
 
-# Description:  
+## Description:  
 This project is meant to show the developer's understanding of new skills regarding javascript. Examples of new skills are, but not limited to, the following:  
 - DOM Traversal
 - Timers
@@ -8,7 +8,7 @@ This project is meant to show the developer's understanding of new skills regard
 - Data Attributes
 - Local Storage
 
-# Technologies Used:
+## Technologies Used:
 - Javascript
 
 ## Contact Information:  
@@ -17,10 +17,10 @@ Feel free to reach out, you can reach me through:
 - Twitter: @Cosdaman  
 - Email: Cosdaguy@gmail.com  
 
-# Link to webpage:  
+## Link to webpage:  
 https://cosdaman.github.io/BCHW4-WebAPI-CodeQuiz/
 
-# Screenshots:  
+## Screenshots:  
 
 ![image](https://user-images.githubusercontent.com/3162991/136621768-f17ce87f-166c-421b-bb3e-15c24226809c.png)
 
